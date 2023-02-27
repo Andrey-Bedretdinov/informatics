@@ -30,20 +30,18 @@ int main() {
 
     cin >> new_base;
 
-    
-    // перевод из десятичной в произвольную систему счисления
-    while (decimal > 0) {
-        int remainder = decimal % new_base; // остаток от деления на основание системы счисления
-
-        if (remainder < 10) {
-            digit = remainder + '0'; // цифры от 0 до 9 представляются символами '0' до '9'
-        } else {
-            digit = remainder - 10 + 'A'; // цифры от 10 до 25 представляются символами 'A' до 'Z'
-        }
-
-        cout << digit; // выводим текущую цифру
-        decimal /= new_base;
+    int n = log(decimal) / log(new_base); // вычисляем количество разрядов в новой системе счисления, которое нужно записать для представления числа в этой системе
+    int current = decimal;
+    while (n >= 0) {
+        int power = pow(new_base, n);
+        int digit = current / power; // вычисляем значение текущего разряда в новой системе счисления
+        char c = digit < 10 ? digit + '0' : digit + '7'; // конвертируем значение текущего разряда в символ в соответствии с правилами выбранной системы счисления
+        cout << c;
+        current %= power;
+        n--;
     }
+    cout << endl;
+    
 
     cout << endl;
     return 0;
